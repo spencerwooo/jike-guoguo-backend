@@ -12,6 +12,12 @@ $ yarn install
 
 # Run dev server
 $ DEBUG=myapp:* yarn start
+
+# Access API straight from your browser:
+# Open URL: `http://localhost:3000/api`
+
+# Or make a GET request
+$ curl http://localhost:3000/api
 ```
 
 🐱🦁🐯🦒🦊🐻🐰🐹🐭🐗🐷🐮🦝👉
