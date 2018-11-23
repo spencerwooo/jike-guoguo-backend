@@ -1,14 +1,17 @@
 var express = require('express')
 var axios = require('axios')
+var dayjs = require('dayjs')
+
+var token = require('../storage/token.json')
+
 var router = express.Router()
-var token = require('../storage/token.js')
 
 var status = {
   ok: 'ok',
   err: 'error'
 }
 
-var jikeAccessToken = token.token.accessToken
+var jikeAccessToken = token['accessToken']
 var jikeApiRootUrl = 'https://app.jike.ruguoapp.com/1.0/users/profile?username='
 
 router.use(function (req, res, next) {
@@ -33,24 +36,36 @@ router.get('/username/:jikeUUID', function (req, res) {
     }
   }).then(function (response) {
     // console.log(response.data)
+    // userInfo: Returns all user data
     var userInfo = response.data.user
+
+    // Get register time to today (In days)
+    var createdTime = userInfo.createdAt
+    var currentTime = dayjs()
+    var registerTime = currentTime.diff(createdTime, 'day')
+
+    // Replace bio's '\n' with '<br>' for frontend
+    var bio = userInfo.bio.replace(/\n/g, '<br>')
+
+    // user: Send required user data in response
     var user = {
       screenName: userInfo.screenName,
-      bio: userInfo.bio,
+      bio: bio,
       isVerified: userInfo.isVerified,
       verifyMessage: userInfo.verifyMessage,
+      medals: userInfo.medals,
       avatarImage: userInfo.avatarImage.smallPicUrl,
       statsCount: {
         followed: userInfo.statsCount.followedCount,
         following: userInfo.statsCount.followingCount
       },
-      createdTime: userInfo.createdAt
+      registerTime: registerTime
       // playgrounds: ['', '', '']
     }
     res.json(user)
   }).catch(function (error) {
-    console.log(error)
     res.send(status.err)
+    throw error
   })
 })
 
