@@ -20,9 +20,9 @@ $ DEBUG=myapp:* yarn start
 $ curl http://localhost:3000/api
 ```
 
-🐱🦁🐯🦒🦊🐻🐰🐹🐭🐗🐷🐮🦝👉
+---
 
-**Jike GuoGuo Name Badge** ©Spencer Woo. Released under the [MIT](https://github.com/spencerwooo/jike-guoguo-badge/blob/master/LICENSE) License. Name badge designs are released under the [CC BY-NC-SA 4.0 License.](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+🐱 **Jike GuoGuo Name Badge** ©Spencer Woo. Released under the [MIT](https://github.com/spencerwooo/jike-guoguo-badge/blob/master/LICENSE) License. Name badge designs are released under the [CC BY-NC-SA 4.0 License.](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 Authored and maintained by Spencer Woo. Co-designed by [ⒿTH3EE](https://web.okjike.com/user/E0BBAACD-3991-49E3-916C-6A67430380A7).
 
