@@ -81,7 +81,7 @@ $ curl http://localhost:3000/api/jike/栈堆
 }
 ```
 
-![](https://i.loli.net/2018/11/24/5bf95c6e3f28b.png)
+![](https://i.loli.net/2018/11/24/5bf96043970b3.png)
 
 ### Response explanation:
 
