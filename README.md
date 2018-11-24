@@ -30,21 +30,27 @@ $ http://localhost:3000/api
 $ curl http://localhost:3000/api
 ```
 
+**API request example:**
+
+``` bash
+$ curl http://localhost:3000/api/jike/:username
+```
+
 **Detailed example:**
 
 ``` bash
-# Me! @SpencerWoo 
-$ curl http://localhost:3000/api/username/4DDA0425-FB41-4188-89E4-952CA15E3C5E
+# Me: @SpencerWoo 
+$ curl http://localhost:3000/api/jike/SpencerWoo
 
-# 栈堆老师，目前见到唯二非 UUID 用户名
-$ curl http://localhost:3000/api/username/hoter 
+# 栈堆老师，中文字段测试
+$ curl http://localhost:3000/api/jike/栈堆
 ```
 
 ## Response payload demo
 
 ### Request:
 
-`http://localhost:3000/api/username/4DDA0425-FB41-4188-89E4-952CA15E3C5E`
+`http://localhost:3000/api/jike/SpencerWoo`
 
 ### Response:
 
@@ -54,17 +60,28 @@ $ curl http://localhost:3000/api/username/hoter
   "bio": "Ⓙ瓦恁 等五百万人关注了他 ➭<br>一手键盘⌨️ / 一支相机📷 / 一把猫毛🐱",
   "isVerified": true,
   "verifyMessage": "编程话题优秀贡献者",
-  "medals": ["..."],
+  "medals": [
+    {
+      "picUrl": "https://cdn.ruguoapp.com/resources/userProfile/medal_topic_talent_2@3x.png",
+      "url": "jike://page.jk/topic/556688fae4b00c57d9dd46ee?ref=USER_PROFILE_MEDAL",
+      "name": "“今日份的摄影”主题每周摄影大师",
+      "badgePicUrl": "https://cdn.ruguoapp.com/FmgIvYfCqop_n5USM7AxOllv_pVe.png?imageMogr2/auto-orient/heic-exif/1/format/jpeg/thumbnail/120x120%3E/quality/30",
+      "gotMedalAt": "2018.10.01"
+    },
+    {
+      "..."
+    }
+  ],
   "avatarImage": "https://cdn.ruguoapp.com/FtuW2cr-elNtq2O4EMQ1EZJFb4Pw.jpg?imageView2/0/w/300/h/300/q/100!",
   "statsCount": {
-    "followed": 1418,
+    "followed": 1420,
     "following": 367
   },
   "registerTime": 564
 }
 ```
 
-![](https://i.loli.net/2018/11/24/5bf948f010737.png)
+![](https://i.loli.net/2018/11/24/5bf95c6e3f28b.png)
 
 ### Response explanation:
 

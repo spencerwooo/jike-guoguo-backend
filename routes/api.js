@@ -7,12 +7,14 @@ var token = require('../storage/token.json')
 var router = express.Router()
 
 var status = {
-  ok: 'ok',
-  err: 'error'
+  ok: 'Ok',
+  searchError: 'Search API Error',
+  userinfoError: 'Get User Info Error'
 }
 
 var jikeAccessToken = token['accessToken']
 var jikeApiRootUrl = 'https://app.jike.ruguoapp.com/1.0/users/profile?username='
+var jikeApiSearchUrl = 'https://app.jike.ruguoapp.com/1.0/users/searchUser'
 
 router.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -24,48 +26,68 @@ router.get('/', function (req, res) {
   res.json(status.ok)
 })
 
-router.get('/username/:jikeUUID', function (req, res) {
-  var username = req.params.jikeUUID
+router.get('/jike/:username', function (req, res) {
+  var username = req.params.username
   // res.json(req.params)
 
+  // Get user uuid via search API by searching username
   axios({
-    method: 'GET',
-    url: jikeApiRootUrl + username,
+    method: 'POST',
+    url: jikeApiSearchUrl,
     headers: {
       'x-jike-access-token': jikeAccessToken
+    },
+    data: {
+      keywords: username,
+      limit: 2,
+      loadMoreKey: null
     }
   }).then(function (response) {
-    // console.log(response.data)
-    // userInfo: Returns all user data
-    var userInfo = response.data.user
+    // Gets user uuid
+    var useruuid = response.data.data[0].username
 
-    // Get register time to today (In days)
-    var createdTime = userInfo.createdAt
-    var currentTime = dayjs()
-    var registerTime = currentTime.diff(createdTime, 'day')
+    // Get user detailed info via uuid
+    axios({
+      method: 'GET',
+      url: jikeApiRootUrl + useruuid,
+      headers: {
+        'x-jike-access-token': jikeAccessToken
+      }
+    }).then(function (response) {
+      // userInfo: Returns all user data
+      var userInfo = response.data.user
 
-    // Replace bio's '\n' with '<br>' for frontend
-    var bio = userInfo.bio.replace(/\n/g, '<br>')
+      // Get register time to today (In days)
+      var createdTime = userInfo.createdAt
+      var currentTime = dayjs()
+      var registerTime = currentTime.diff(createdTime, 'day')
 
-    // user: Send required user data in response
-    var user = {
-      screenName: userInfo.screenName,
-      bio: bio,
-      isVerified: userInfo.isVerified,
-      verifyMessage: userInfo.verifyMessage,
-      medals: userInfo.medals,
-      avatarImage: userInfo.avatarImage.smallPicUrl,
-      statsCount: {
-        followed: userInfo.statsCount.followedCount,
-        following: userInfo.statsCount.followingCount
-      },
-      registerTime: registerTime
-      // playgrounds: ['', '', '']
-    }
-    res.json(user)
-  }).catch(function (error) {
-    res.send(status.err)
-    throw error
+      // Replace bio's '\n' with '<br>' for frontend
+      var bio = userInfo.bio.replace(/\n/g, '<br>')
+
+      // user: Send required user data in response
+      var user = {
+        screenName: userInfo.screenName,
+        bio: bio,
+        isVerified: userInfo.isVerified,
+        verifyMessage: userInfo.verifyMessage,
+        medals: userInfo.medals,
+        avatarImage: userInfo.avatarImage.smallPicUrl,
+        statsCount: {
+          followed: userInfo.statsCount.followedCount,
+          following: userInfo.statsCount.followingCount
+        },
+        registerTime: registerTime
+        // playgrounds: ['', '', '']
+      }
+      res.json(user)
+    }).catch(function (err) {
+      res.send(status.userinfoError)
+      throw err
+    })
+  }).catch(function (err) {
+    res.send(status.searchError)
+    throw err
   })
 })
 
