@@ -10,7 +10,7 @@
 # Install dependencies
 $ yarn install
 
-# Run dev server, listens at port 3000
+# Run dev server, listens at port 9000
 $ yarn start
 ```
 
@@ -19,7 +19,7 @@ $ yarn start
 ### Access API straight from your browser:
 
 ```
-$ http://localhost:3000/api
+$ http://localhost:9000/api
 ```
 
 ### Or make a GET request:
@@ -27,30 +27,30 @@ $ http://localhost:3000/api
 **API landing page:**
 
 ``` bash
-$ curl http://localhost:3000/api
+$ curl http://localhost:9000/api
 ```
 
 **API request example:**
 
 ``` bash
-$ curl http://localhost:3000/api/jike/:username
+$ curl http://localhost:9000/api/jike/:username
 ```
 
 **Detailed example:**
 
 ``` bash
 # Me: @SpencerWoo 
-$ curl http://localhost:3000/api/jike/SpencerWoo
+$ curl http://localhost:9000/api/jike/SpencerWoo
 
 # 栈堆老师，中文字段测试
-$ curl http://localhost:3000/api/jike/栈堆
+$ curl http://localhost:9000/api/jike/栈堆
 ```
 
 ## Response payload demo
 
 ### Request:
 
-`http://localhost:3000/api/jike/SpencerWoo`
+`http://localhost:9000/api/jike/SpencerWoo`
 
 ### Response:
 
