@@ -46,7 +46,7 @@ app.use(function (err, req, res, next) {
   res.render('error')
 })
 
-// refresh tokens every 10 minutes
+// refresh tokens every minute
 var jikeTokenRefreshUrl = 'https://app.jike.ruguoapp.com/app_auth_tokens.refresh'
 var refreshRate = 10 * 60 * 1e3
 
@@ -57,22 +57,24 @@ function refreshTokens () {
       method: 'GET',
       url: jikeTokenRefreshUrl,
       headers: {
-        'x-jike-refresh-token': token.refreshToken
+        'x-jike-refresh-token': token.token.refreshToken
       }
     }).then(function (response) {
       var refreshToken = response.data['x-jike-refresh-token']
       var accessToken = response.data['x-jike-access-token']
       var refreshTimestamp = dayjs().format('{YYYY-MM-DD} HH:mm:ss')
       var tokenData = {
-        'refreshToken': refreshToken,
-        'accessToken': accessToken,
-        'refreshTimestamp': refreshTimestamp
+        token: {
+          'refreshToken': refreshToken,
+          'accessToken': accessToken,
+          'refreshTimestamp': refreshTimestamp
+        }
       }
       fs.writeFile('./storage/token.json', JSON.stringify(tokenData), function (err) {
         // err
         if (err) throw err
       })
-      console.log('[INFO] Refreshed! At time: ' + refreshTimestamp)
+      console.log('[INFO] ' + response.data['success'] + ': Refreshed! At time: ' + refreshTimestamp)
     }).catch(function (error) {
       console.log('[ERR!] ' + error)
     })
