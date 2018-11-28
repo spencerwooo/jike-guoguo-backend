@@ -84,7 +84,9 @@ router.get('/jike/:username', function (req, res) {
           avatarImage: userInfo.avatarImage.smallPicUrl,
           statsCount: {
             followed: userInfo.statsCount.followedCount,
-            following: userInfo.statsCount.followingCount
+            following: userInfo.statsCount.followingCount,
+            editorPicked: userInfo.statsCount.highlightedPersonalUpdates,
+            liked: userInfo.statsCount.liked
           },
           registerTime: registerTime
         // playgrounds: ['', '', '']
