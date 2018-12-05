@@ -76,6 +76,7 @@ router.get('/jike/:username', function (req, res) {
         var user = {
           username: userInfo.username,
           screenName: userInfo.screenName,
+          backgroundImage: userInfo.backgroundImage.picUrl,
           bio: bio,
           isVerified: userInfo.isVerified,
           verifyMessage: userInfo.verifyMessage,
