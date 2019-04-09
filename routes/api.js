@@ -72,6 +72,8 @@ router.get('/jike/:username', function (req, res) {
         // Replace bio's '\n' with '<br>' for frontend
         var bio = userInfo.bio.replace(/\n/g, '<br>')
 
+        var avatarOriginalImage = userInfo.avatarImage.smallPicUrl.split('?imageMogr2')[0]
+
         // user: Send required user data in response
         var user = {
           username: userInfo.username,
@@ -82,7 +84,7 @@ router.get('/jike/:username', function (req, res) {
           verifyMessage: userInfo.verifyMessage,
           verifyIcon: 'https://cdn.ruguoapp.com/jike-web/static/images/verified.6e5b91e.svg',
           medals: userInfo.medals,
-          avatarImage: userInfo.avatarImage.smallPicUrl,
+          avatarImage: avatarOriginalImage,
           statsCount: {
             followed: userInfo.statsCount.followedCount,
             following: userInfo.statsCount.followingCount,
